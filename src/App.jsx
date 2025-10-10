@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Navbar/>
-      <ItemListContainer/>
+      <ItemListContainer title={"Bienvenido a Agentur"} subtitle={"Tu próximo viaje comienza aquí"}/>
       <Footer/>
     </>
   )
