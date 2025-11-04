@@ -118,30 +118,31 @@ body{
             
 
     .nav-item {
+        text-decoration: none;
         min-width: 12vw;
         border-bottom: 1px solid #63a3f8; }
         @media (min-width: 768px) {
             .nav-item {
                 border-bottom: none; } }
-        .nav-item a {
+        .nav-item {
             color: #000000;
             text-align: left; }
-            .nav-item a:hover {
+            .nav-item:hover {
                 color: #ffffff;
                 font-weight: 500;
                 transform: translateX(30px);
                 transition: transform 1.3s; }
         @media (min-width: 768px) {
-            .nav-item a {
+            .nav-item {
                 font-weight: 500;
             text-align: center; }
-            .nav-item a:hover {
+            .nav-item:hover {
                 color: white;
                 transform: scale(1.3);
                 transition: transform 1.3s; } }
         .nav-item:hover {
         color: #ffffff; }
-        .nav-item a:hover {
+        .nav-item:hover {
         text-shadow: 5px 5px 10px #ffffff; }
 
         .modal .modal-dialog .modal-content {
@@ -172,6 +173,46 @@ body{
                 margin: 2rem auto; } }
 
 main {
-    height: 100vh;
+    min-height: 100vh;
     margin-top: 20px;
     margin-bottom: 20px; }
+
+        .servicios {
+            width: 75%;
+            align-self: flex-end; }
+        .servicio {
+            width: 20px;
+            margin-right: 10px; }
+
+            .star {width: 25px; }
+
+/*☺ _footer.scss*/
+
+footer {
+    padding: 1rem 0;
+    margin-top: 0;
+    background-image: url(../src/assets/vuelos-.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: 100%;
+    display: flex;
+    justify-content: center;
+align-items: center;
+align-content: center; }
+footer .redes-sociales, footer .pie-contacto {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-bottom: 0; }
+    footer .copy {
+        align-items: center; }
+    footer .copy h6 {
+        font-weight: 500;
+        text-align: center;
+    color: #000000; }
+    @media (max-width: 768px) {
+        footer .copy h6 {
+        margin-bottom: 0; } }
+footer img[alt^="icono"] {
+    width: 30px; }
+

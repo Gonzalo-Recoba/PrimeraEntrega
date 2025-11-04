@@ -1,8 +1,14 @@
+import IconPerfil from "../../assets/perfil.png";
+import IconLoginFacebook from "../../assets/login_facebook.png";
+import IconLoginGoogle from "../../assets/login_google.png";
+import IconLoginApple from "../../assets/login_apple.png";
+import { useState } from "react";
+
 const CartWidget = () => {
     return (
         <>
             <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModallogin" className="bg-transparent border-0" href="#" >
-                <img src='src\assets\perfil.png' alt="icono perfil" className='mx-3 perfil' />
+                <img src={IconPerfil} alt="icono perfil" className='mx-3 perfil' />
             </button>
 
             <ModalLogin/>
@@ -53,9 +59,9 @@ const ModalLogin = () => {
                                         </div>
 
                                         <div className="d-flex flex-wrap justify-content-center">
-                                            <a href="#"><img src="src\assets\login_facebook.png" alt="icono representativo para iniciar sesión con Facebook" className="w-3 mx-3"/></a>
-                                            <a href="#"><img src="src\assets\login_google.png" alt="icono representativo para iniciar sesión con Google" className="w-3 mx-3"/></a>
-                                            <a href="#"><img src="src\assets\login_apple.png" alt="icono representativo para iniciar sesión con Icloud" className="w-3 mx-3"/></a>
+                                            <a href="#"><img src={IconLoginFacebook} alt="icono representativo para iniciar sesión con Facebook" className="w-3 mx-3"/></a>
+                                            <a href="#"><img src={IconLoginGoogle} alt="icono representativo para iniciar sesión con Google" className="w-3 mx-3"/></a>
+                                            <a href="#"><img src={IconLoginApple} alt="icono representativo para iniciar sesión con Icloud" className="w-3 mx-3"/></a>
                                         </div>
 
                                         <div className="d-flex justify-content-center mt-5">

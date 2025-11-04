@@ -1,12 +1,16 @@
-import CartWidget from "./CartWidget"
-
+import { Link } from "react-router-dom";
+import CartWidget from "../cartwidget/CartWidget.jsx";
+import {routes} from '../../utils/Routes.js';
+import IconLogo from '../../assets/logo.svg';
 
 const Navbar = () => {
     return (
     <header id="mainNavigation">
         <nav role="navigation">
             <div className="pt-3 text-center">
-                <img src="src\assets\logo.svg" alt="Logo Agentur S.A." className="invert logo"/>
+                <Link to={routes.home}>
+                    <img src={IconLogo} alt="Logo Agentur S.A." className="invert logo"/>
+                </Link>
             </div>
         </nav>
         <div className="navbar-expand-md ">
@@ -18,11 +22,9 @@ const Navbar = () => {
             </div>
             <div className="text-center mt-3 collapse navbar-collapse" id="navbarNavDropdown">
                 <ul className="navbar-nav mx-auto">
-                    <li className="nav-item"><a className="nav-link" href="#">Destinos</a></li>
-                    <li className="nav-item"><a className="nav-link" href="#">Alojamientos</a></li>
-                    <li className="nav-item"><a className="nav-link" href="#">Autos</a></li>
-                    <li className="nav-item"><a className="nav-link" href='#'>Contacto</a></li>
-                    <CartWidget/>                          
+                    <Link to={routes.home} className="nav-item"><span className="nav-link">Destinos</span></Link>
+                    <Link to={routes.alojamientos} className="nav-item"><span className="nav-link">Alojamientos</span></Link>
+                    <Link to={routes.contact} className="nav-item"><span className="nav-link">Contacto</span></Link>                    <CartWidget/>                          
                 </ul>
             </div>
         </div>
