@@ -7,6 +7,7 @@ import {routes} from './utils/Routes.js'
 import Contact from './pages/Contact.jsx'
 import Alomamientos from './pages/Alojamientos.jsx'
 import DestinosDetail from './components/idemDetail/DestinosDetail.jsx'
+import ErrorPage from './pages/ErrorPage.jsx'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path={routes.alojamientos} element={ <Alomamientos/> } />
         <Route path={routes.contact} element={ <Contact/> } />
         <Route path={routes.destinosDetail} element={<DestinosDetail/>}/>
+        <Route path={routes.default} element={ <ErrorPage/> } />
       </Routes>
       <Footer/>
     </>

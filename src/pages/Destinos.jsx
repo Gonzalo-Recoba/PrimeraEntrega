@@ -1,8 +1,9 @@
 import React from 'react'
+import ErrorPage from './ErrorPage'
 
 const Destinos = () => {
   return (
-    <div>Destinos</div>
+    <ErrorPage/>
   )
 }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ItemList from '../itemList/ItemList'
 import {API_KEY} from '../../utils/apiKey.js';
+import LoadingPlaceholder from '../loading/LoadingPlaceholder.jsx';
 
 const ItemListContainer = () => {
         const url = `https://script.google.com/macros/s/${API_KEY}?type=get`;
@@ -39,6 +40,14 @@ const ItemListContainer = () => {
         const minPrecio = Math.min(...destinos.map(d => d.precio));
         const maxPrecio = Math.max(...destinos.map(d => d.precio));
 
+        if (loading) {
+            return <LoadingPlaceholder/>;
+        }
+
+        if (destinos.length === 0) {
+            return <h5 className="text-center">No hay alojamientos disponibles en este momento.</h5>;
+        }
+
     return (
         <>
             <select className="form-select w-25 mx-auto d-block" onChange={(e) => setCiudadFiltro(e.target.value)}>
@@ -62,7 +71,7 @@ const ItemListContainer = () => {
                 />
             </div>
 
-            <ItemList destinos={destinosFiltrados} loading={loading}/>
+            <ItemList destinos={destinosFiltrados}/>
         </>
     )
 }

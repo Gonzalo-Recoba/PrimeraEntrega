@@ -7,6 +7,8 @@ import IconHabitacion from '../../assets/icons/service.png'
 import IconAire from '../../assets/icons/air.png'
 import IconGym from '../../assets/icons/gym.png'
 import IconPiscina from '../../assets/icons/piscina.png'
+import LoadingPlaceholder from '../loading/LoadingPlaceholder.jsx';
+import Carousel from '../carousel/Carousel.jsx';
 
 const DestinosDetail = () => {
     const {id} = useParams();
@@ -28,18 +30,24 @@ const DestinosDetail = () => {
     return (
         <div className='container mh-100' style={{minHeight: "100vh"}}>
             { loading ?
-                <p>Cargando...</p>
+                LoadingPlaceholder()
             :
                 <div className="alojamiento-detail container my-4">
-                    <h2>{alojamiento.nombre}</h2>
-                    <p>{alojamiento.ciudad}</p>
-                    {estrellas(alojamiento.estrellas)}
-                    <p>{alojamiento.estrellas} estrellas</p>
-                    {renderizarServicios(alojamiento)}
-                    <p>Precio: ${alojamiento.precio}</p>
-                    <p>{alojamiento.descripcion}</p>
-                    <img src={alojamiento.imagen1} alt={alojamiento.nombre} className='w-30' />
-                    <img src={alojamiento.imagen2} alt={alojamiento.nombre} className='w-30' />
+                    <div className='row'>
+                        <div className='col-6'>
+                            <h2>{alojamiento.nombre}</h2>
+                            <p>{alojamiento.ciudad}</p>
+                            {renderizarEstrellas(alojamiento.estrellas)}
+                            <p>{alojamiento.estrellas} estrellas</p>
+                            <h6>Servicios incluidos:</h6>
+                            {renderizarServicios(alojamiento)}
+                            <p>{alojamiento.descripcion}</p>
+                            <h4>Precio: ${alojamiento.precio}</h4>
+                        </div>
+                        <div className='col-6'>
+                            <Carousel images={[{src: alojamiento.imagen1, alt: alojamiento.nombre}, {src: alojamiento.imagen2, alt: alojamiento.nombre}]}/>
+                        </div>
+                    </div>
                 </div>
             }
         </div>
@@ -84,7 +92,7 @@ const DestinosDetail = () => {
         return listaDeServicios;
     }
 
-    const estrellas = (cant) => {
+    const renderizarEstrellas = (cant) => {
         if (cant === 1) return <img src={IconStar} alt="una estrella" className="star"/>;
         if (cant === 2) return <>
             <img src={IconStar} alt="una estrella" className="star"/>

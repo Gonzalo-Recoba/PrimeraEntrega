@@ -5,38 +5,36 @@ import IconGym from '../../assets/icons/gym.png'
 import IconPiscina from '../../assets/icons/piscina.png'
 import IconStar from '../../assets/icons/mstar.png'
 import { Link } from 'react-router-dom'
+import LoadingPlaceholder from '../loading/LoadingPlaceholder'
 
-const ItemList = ({destinos, loading}) => {
+const ItemList = ({destinos}) => {
 
 
 
     return (
         <div className="row g-4 my-4">
-            { loading ?
-                loadingPlaceholder()
-            :
-            destinos.map((hotel) => {
+            {destinos.map((hotel) => {
                 return (
-                <div className='col-12 col-md-6 col-lg-4' key={hotel.id}>
-                    <div className="card alojamiento p-1">
-                        <div className="card-body">
-                        <img src={hotel.imagen1} className="d-block w-100 mb-2" alt="Puerta de entrada del hotel Hispano"/>
-                        <h5 className="card-title text-center h5">{hotel.nombre}</h5>
-                            <p className="card-text text-center mb-1"><small className="text-muted">{hotel.ciudad}</small></p>
-                            <p className="card-text text-center mb-1 fw-bold">${hotel.precio}</p>
-                            <div className="estrellas d-flex mb-3 mx-auto justify-content-center" id="estrellas">
-                                {estrellas(hotel.estrellas)}
-                            </div> 
-                            <div className="servicios justify-content-center d-flex mx-auto">
-                                {renderizarServicios(hotel)}
-                            </div>  
+                    <div className='col-12 col-md-6 col-lg-4' key={hotel.id}>
+                        <div className="card alojamiento p-1">
+                            <div className="card-body">
+                            <img src={hotel.imagen1} className="d-block w-100 mb-2" alt="Puerta de entrada del hotel Hispano"/>
+                            <h5 className="card-title text-center h5">{hotel.nombre}</h5>
+                                <p className="card-text text-center mb-1"><small className="text-muted">{hotel.ciudad}</small></p>
+                                <p className="card-text text-center mb-1 fw-bold">${hotel.precio}</p>
+                                <div className="estrellas d-flex mb-3 mx-auto justify-content-center" id="estrellas">
+                                    {estrellas(hotel.estrellas)}
+                                </div> 
+                                <div className="servicios justify-content-center d-flex mx-auto">
+                                    {renderizarServicios(hotel)}
+                                </div>  
+                            </div>
+                            <div className="modal-footer d-flex justify-content-center">
+                                <Link to={`/destinos/${hotel.id}`} className="btn btn-primary">Ver mas información</Link>
+                            </div>              
                         </div>
-                        <div className="modal-footer d-flex justify-content-center">
-                            <Link to={`/destinos/${hotel.id}`} className="btn btn-primary">Ver mas información</Link>
-                        </div>              
                     </div>
-                </div>
-            )}
+                )}
             )}
         </div>
     )

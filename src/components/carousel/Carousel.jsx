@@ -1,22 +1,5 @@
-const Carousel = () => {
-    const images = [
-        {
-            src: 'src\\assets\\carousel\\1.webp',
-            alt: 'Imagen carousel 1 - esta imagen es utilizada para representar la campaña 1'
-        },
-        {
-            src: 'src\\assets\\carousel\\2.webp',
-            alt: 'Imagen carousel 2 - esta imagen es utilizada para representar la campaña 1'
-        },
-        {
-            src: 'src\\assets\\carousel\\3.webp',
-            alt: 'Imagen carousel 3 - esta imagen es utilizada para representar la campaña 1'
-        },
-        {
-            src: 'src\\assets\\carousel\\4.webp',
-            alt: 'Imagen carousel 4 - esta imagen es utilizada para representar la campaña 1'
-        }
-    ]
+const Carousel = ({images}) => {
+
     return (
         <div id="carouselExampleIndicators" className="carousel carouselppal slide pt-1 w-90 mx-auto mb-3 wow animate__zoomIn" data-bs-ride="carousel">
             <div className="carousel-indicators">
