@@ -1,7 +1,7 @@
 const Carousel = ({images}) => {
 
     return (
-        <div id="carouselExampleIndicators" className="carousel carouselppal slide pt-1 w-90 mx-auto mb-3 wow animate__zoomIn" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators" className="carousel carouselppal slide pt-1 w-90 mx-auto mb-3" data-bs-ride="carousel">
             <div className="carousel-indicators">
                 {images.map((image, index) => (
                     <button key={index} disabled type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={index} className="active" aria-current="true" aria-label={"Slide " + index}></button>

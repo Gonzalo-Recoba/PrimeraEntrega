@@ -1,26 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import ItemList from '../itemList/ItemList'
-import {API_KEY} from '../../utils/apiKey.js';
 import LoadingPlaceholder from '../loading/LoadingPlaceholder.jsx';
+import { app } from '../../utils/firestore/firestore.js';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
 const ItemListContainer = () => {
-        const url = `https://script.google.com/macros/s/${API_KEY}?type=get`;
         const [destinos, setDestinos] = useState([]);
         const [loading, setLoading] = useState(true);
         const [ciudadFiltro, setCiudadFiltro] = useState('');
         const [precioFiltro, setPrecioFiltro] = useState('');
 
-        useEffect(() => {
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    setDestinos(data);
-                    const maxPrecio = Math.max(...data.map(d => d.precio));
-                    setPrecioFiltro(maxPrecio);
-                })
-                .catch(error => console.error('Error fetching data:', error))
-                .finally(() => setLoading(false));
-        }, []);
+        useEffect(() => {            
+            const db = getFirestore(app);
+                try {
+                    const querySnapshot = getDocs(collection(db, 'alojamientos'));
+                    querySnapshot.then((snapshot) => {
+                        const items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                        setDestinos(items);
+                        const maxPrecio = Math.max(...items.map(d => d.precio));
+                        setPrecioFiltro(maxPrecio);
+                        console.log(items);
+                    });
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                } finally {
+                    setLoading(false);
+                }
+        }, [])
 
 
         const ciudadesUnicas = new Set();
@@ -70,7 +76,6 @@ const ItemListContainer = () => {
                     id="precio"
                 />
             </div>
-
             <ItemList destinos={destinosFiltrados}/>
         </>
     )

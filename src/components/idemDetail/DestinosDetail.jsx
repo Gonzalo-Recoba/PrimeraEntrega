@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import {API_KEY} from '../../utils/apiKey.js';
 import IconStar from '../../assets/icons/mstar.png';
 import IconWifi from '../../assets/icons/wifi.png'
 import IconHabitacion from '../../assets/icons/service.png'
@@ -9,28 +8,35 @@ import IconGym from '../../assets/icons/gym.png'
 import IconPiscina from '../../assets/icons/piscina.png'
 import LoadingPlaceholder from '../loading/LoadingPlaceholder.jsx';
 import Carousel from '../carousel/Carousel.jsx';
+import ReservationForm from '../ReservationForm/ReservationForm.jsx';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import { app } from '../../utils/firestore/firestore.js';
 
 const DestinosDetail = () => {
     const {id} = useParams();
     const [loading, setLoading] = useState(true);
     const [alojamiento, setAlojamiento] = useState({});
-    const url = `https://script.google.com/macros/s/${API_KEY}?type=getOne&id=${id}`;
-
     useEffect(() => {
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                setAlojamiento(data[0]);
-            })
-            .catch(error => console.error('Error fetching data:', error))
-            .finally(() => setLoading(false));
-    }, []);
+        const db = getFirestore(app);
+        const docRef = doc(db, 'alojamientos', id);
+        getDoc(docRef).then((docSnap) => {
+            if (docSnap.exists()) {
+                setAlojamiento({ id: docSnap.id, ...docSnap.data() });
+            } else {
+                console.log('No such document!');
+            }
+        }).catch((error) => {
+            console.error('Error fetching data:', error);
+        }).finally(() => {
+            setLoading(false);
+        });
+    }, [id]);
     
 
     return (
         <div className='container mh-100' style={{minHeight: "100vh"}}>
             { loading ?
-                LoadingPlaceholder()
+                <LoadingPlaceholder />
             :
                 <div className="alojamiento-detail container my-4">
                     <div className='row'>
@@ -40,12 +46,15 @@ const DestinosDetail = () => {
                             {renderizarEstrellas(alojamiento.estrellas)}
                             <p>{alojamiento.estrellas} estrellas</p>
                             <h6>Servicios incluidos:</h6>
-                            {renderizarServicios(alojamiento)}
+                            {renderizarServicios(alojamiento.servicios)}
                             <p>{alojamiento.descripcion}</p>
                             <h4>Precio: ${alojamiento.precio}</h4>
                         </div>
-                        <div className='col-6'>
-                            <Carousel images={[{src: alojamiento.imagen1, alt: alojamiento.nombre}, {src: alojamiento.imagen2, alt: alojamiento.nombre}]}/>
+                        <div className='col-3'>
+                            <Carousel images={alojamiento.images ? alojamiento.images.map((img, index) => ({src: img, alt: `Imagen ${index + 1}`})) : []}/>
+                        </div>
+                        <div className='col-3'>
+                            <ReservationForm hotel={alojamiento} />
                         </div>
                     </div>
                 </div>
@@ -54,7 +63,7 @@ const DestinosDetail = () => {
     )
 }
 
-    const renderizarServicios = (hotel) => {
+    const renderizarServicios = (servicios) => {
         const mapaServicios = {
             wifi: {
                 src: IconWifi,
@@ -82,13 +91,14 @@ const DestinosDetail = () => {
                 title: "Servicio piscina incluida"
             }
         };
-        const listaDeServicios = hotel.servicios.split(', ').map( (nombreServicio) => {
-                const servicio = mapaServicios[nombreServicio];
-                if (servicio) {
-                    return <img key={servicio.alt} src={servicio.src} alt={servicio.alt} title={servicio.title} className="servicio"/>;
-                }
-                return null;
-            })
+        servicios = servicios || [];
+        const listaDeServicios = servicios.map((nombreServicio) => {
+            const servicio = mapaServicios[nombreServicio];
+            if (servicio) {
+                return <img key={servicio.alt} src={servicio.src} alt={servicio.alt} title={servicio.title} className="servicio"/>;
+            }
+            return null;
+        });
         return listaDeServicios;
     }
 
